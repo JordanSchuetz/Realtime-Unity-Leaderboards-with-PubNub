@@ -9,6 +9,7 @@ public class MyClass
 {
 	public string username;
 	public string score;
+	public string test;
 }
 
 public class leaderBoard : MonoBehaviour {
@@ -23,11 +24,6 @@ public class leaderBoard : MonoBehaviour {
 	public Text Score3;
 	public Text Score4;
 	public Text Score5;
-	public int ScoreInt1;
-	public int ScoreInt2;
-	public int ScoreInt3;
-	public int ScoreInt4;
-	public int ScoreInt5;
 
 	public Button SubmitButton;
 	public InputField FieldUsername;
@@ -48,21 +44,32 @@ public class leaderBoard : MonoBehaviour {
 
 		pubnub = new PubNub(pnConfiguration);
 		Debug.Log (pnConfiguration.UUID);
-		//scores = ("Score: {0}\nScore: {1}\nScore: {2}\nScore: {3}\nScore: {4}", ScoreInt1, ScoreInt2, ScoreInt3, ScoreInt4, ScoreInt5);
+			
+
+		MyClass myFireObject = new MyClass();
+		myFireObject.test = "new user";
+		string fireobject = JsonUtility.ToJson(myFireObject);
+		pubnub.Fire()
+			.Channel("my_channel")
+			.Message(fireobject)
+			.Async((result, status) => {
+				if(status.Error){
+					Debug.Log (status.Error);
+					Debug.Log (status.ErrorData.Info);
+				} else {
+					Debug.Log (string.Format("Fire Timetoken: {0}", result.Timetoken));
+				}
+			});
+		
 		pubnub.SusbcribeCallback += (sender, e) => { 
 			SusbcribeEventEventArgs mea = e as SusbcribeEventEventArgs;
 			if (mea.Status != null) {
 			}
 			if (mea.MessageResult != null) {
-				//try {
 				Dictionary<string, object> msg = mea.MessageResult.Payload as Dictionary<string, object>;
-
-				Debug.Log("msg: " + msg["username"]);
-				Debug.Log("msg: " + msg["score"]);
 
 				string[] strArr = msg["username"] as string[];
 				string[] strScores = msg["score"] as string[];
-
 
 				int usernamevar = 1;
 				foreach (string username in strArr)
@@ -81,13 +88,8 @@ public class leaderBoard : MonoBehaviour {
 					scorevar++;
 					Debug.Log(score);
 				}
-
-				//var myKey = msg.FirstOrDefault(x => x.Value == "one").Key;
-
-
 			}
 			if (mea.PresenceEventResult != null) {
-				//lastClickText.text = mea.PresenceEventResult.UUID.ToString();
 				Debug.Log("In Example, SusbcribeCallback in presence" + mea.PresenceEventResult.Channel + mea.PresenceEventResult.Occupancy + mea.PresenceEventResult.Event);
 			}
 		};
@@ -97,11 +99,6 @@ public class leaderBoard : MonoBehaviour {
 			})
 			.WithPresence()
 			.Execute();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
 	void TaskOnClick()
@@ -115,7 +112,6 @@ public class leaderBoard : MonoBehaviour {
 
 		pubnub.Publish()
 			.Channel("my_channel")
-			//.Message("{\n\t\"username\": \"FieldUsername.text\",\n\t\"FieldScore.text\": \"810\"\n}")
 			.Message(json)
 			.Async((result, status) => {    
 				if (!status.Error) {

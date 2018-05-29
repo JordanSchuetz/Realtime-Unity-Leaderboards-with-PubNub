@@ -422,7 +422,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 73f1cf58c73cc47f9a68777e59c8ac45, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2a1ba2593836e460789d62ce4b1fb9e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -439,7 +439,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 153891851}
   m_LocalRotation: {x: 0, y: 0, z: 0.0020944288, w: 0.99999785}
-  m_LocalPosition: {x: 0.7, y: -2.05, z: 0}
+  m_LocalPosition: {x: -0.02, y: 0.14, z: 0}
   m_LocalScale: {x: 0.63539076, y: 0.63539076, z: 0.63539076}
   m_Children: []
   m_Father: {fileID: 0}
@@ -960,7 +960,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1015,9 +1015,9 @@ MonoBehaviour:
   ScoreInt3: 0
   ScoreInt4: 0
   ScoreInt5: 0
-  SubmitButton: {fileID: 0}
-  FieldUsername: {fileID: 0}
-  FieldScore: {fileID: 0}
+  SubmitButton: {fileID: 15106383}
+  FieldUsername: {fileID: 499143441}
+  FieldScore: {fileID: 955599686}
 --- !u!1 &722500783
 GameObject:
   m_ObjectHideFlags: 0
